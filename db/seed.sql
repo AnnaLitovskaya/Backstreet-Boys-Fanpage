@@ -18,7 +18,7 @@ CREATE TABLE discography(
 CREATE TABLE info(
   id INTEGER PRIMARY KEY,
   memberid INTEGER REFERENCES members(id),
-  bio  VARCHAR(20000),
+  bio  VARCHAR(2000),
   bday  DATE,
   favealbumid INTEGER REFERENCES discography(id),
   image VARCHAR(100)
@@ -39,12 +39,12 @@ INSERT INTO members(id, name) VALUES(5, 'Kevin Richardson');
 INSERT INTO discography(id, title, year, cover) VALUES(1, 'Backstreet Boys', 1996, 'backstreet_boys_cover.jpg');
 INSERT INTO discography(id, title, year, cover) VALUES(2, 'Backstreets Back', 1997, 'backstreets_back_cover.jpg');
 INSERT INTO discography(id, title, year, cover) VALUES(3, 'Millenium', 1999, 'millenium_cover.jpg');
-INSERT INTO discography(id, title, year, cover) VALUES(4, 'Black and Blue', 2000, 'black_and_blue_cover.jpg');
+INSERT INTO discography(id, title, year, cover) VALUES(4, 'Black and Blue', 2000, 'black_and_blue_cover.png');
 INSERT INTO discography(id, title, year, cover) VALUES(5, 'Never Gone', 2005, 'never_gone_cover.jpg');
 INSERT INTO discography(id, title, year, cover) VALUES(6, 'Unbreakable', 2007, 'unbreakable_cover.jpg');
 INSERT INTO discography(id, title, year, cover) VALUES(7, 'This Is Us', 2009, 'this_is_us_cover.jpg');
-INSERT INTO discography(id, title, year, cover) VALUES(8, 'In a World Like This', 2013, 'in_a_world_like_this_cover.jpg');
-INSERT INTO discography(id, title, year, cover) VALUES(9, 'DNA', 2019, 'dna_cover.jpg');
+INSERT INTO discography(id, title, year, cover) VALUES(8, 'In a World Like This', 2013, 'in_a_world_like_this_cover.png');
+INSERT INTO discography(id, title, year, cover) VALUES(9, 'DNA', 2019, 'dna_cover.png');
 
 INSERT INTO instruments(instrument, memberid) VALUES('Vocals', 1);
 INSERT INTO instruments(instrument, memberid) VALUES('Vocals', 2);
