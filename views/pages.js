@@ -1,27 +1,35 @@
 const html = require('html-template-tag');
 
+function styles() {
+  return html`
+    <head>
+      <link rel="stylesheet" href="../assets/styles.css" />
+    </head>
+  `;
+}
+
 function header(url) {
   return html`
     <div id="header">
       <h1>
         <a class="${url === '/' ? 'selected' : ''}" href="/">
-          Backstreet Boys Fan Club</a
-        >
+          Backstreet Boys Fan Club
+        </a>
       </h1>
       <div>
         <h2>
           <a
             class="${url.startsWith('/members') ? 'selected' : ''}"
             href="/members"
-            >Members</a
-          >
+            >Members
+          </a>
         </h2>
         <h2>
           <a
             class="${url.startsWith('/discography') ? 'selected' : ''}"
             href="/discography"
-            >Discography</a
-          >
+            >Discography
+          </a>
         </h2>
       </div>
     </div>
@@ -31,13 +39,11 @@ function header(url) {
 function main(url) {
   return html`
     <html>
-      <head>
-        <link rel="stylesheet" href="/assets/page1.css" />
-      </head>
+      $${styles()}
       <body>
         $${header(url)}
         <img
-          src="/assets/backstreet_boys_main.jpg"
+          src="/assets/photos/backstreet_boys_main.jpg"
           alt="Backstreet Boys Main Page"
         />
       </body>
@@ -48,9 +54,7 @@ function main(url) {
 function members(members, url) {
   return html`
     <html>
-      <head>
-        <link rel="stylesheet" href="/assets/page1.css" />
-      </head>
+      $${styles()}
       <body>
         $${header(url)}
         <div>
@@ -65,7 +69,7 @@ function members(members, url) {
               )
               .join('')}
           </ul>
-          <img src="/assets/members_page.jpg" alt="Members Page" />
+          <img src="/assets/photos/members_page.jpg" alt="Members Page" />
         </div>
       </body>
     </html>
@@ -75,14 +79,12 @@ function members(members, url) {
 function memberID(info, instruments, url) {
   return html`
     <html>
-      <head>
-        <link rel="stylesheet" href="/assets/page1.css" />
-      </head>
+      $${styles()}
       <body>
         $${header(url)}
-        <h2>${info.name}</h2>
         <div>
-          <img src="/assets/${info.image}" alt="Members Image" />
+          <h2>${info.name}</h2>
+          <img src="/assets/photos/${info.image}" alt="Members Image" />
           <ul>
             <li>Birthday : ${info.bday}</li>
             <li>
@@ -106,9 +108,7 @@ function memberID(info, instruments, url) {
 function discography(discography, url) {
   return html`
     <html>
-      <head>
-        <link rel="stylesheet" href="/assets/page1.css" />
-      </head>
+      $${styles()}
       <body>
         $${header(url)}
         <div>
@@ -117,14 +117,16 @@ function discography(discography, url) {
               .map(
                 (album) => html`
                   <li>
-                    <a href="/discography/${album.id}"> ${album.title}</a> -
-                    ${album.year}
+                    <a href="/discography/${album.id}"> ${album.title}</a>
                   </li>
                 `
               )
               .join('')}
           </ul>
-          <img src="/assets/discography_page.jpg" alt="Discography Page" />
+          <img
+            src="/assets/photos/discography_page.jpg"
+            alt="Discography Page"
+          />
         </div>
       </body>
     </html>
@@ -134,14 +136,12 @@ function discography(discography, url) {
 function discographyID(album, url) {
   return html`
     <html>
-      <head>
-        <link rel="stylesheet" href="/assets/page1.css" />
-      </head>
+      $${styles()}
       <body>
         $${header(url)}
         <div>
           <h2>${album.title}</h2>
-          <img src="/assets/${album.cover}" alt="Album Image" />
+          <img src="/assets/photos/${album.cover}" alt="Album Image" />
           <h3>Release Year : ${album.year}</h3>
         </div>
       </body>
@@ -156,4 +156,5 @@ module.exports = {
   discography,
   discographyID,
   header,
+  styles,
 };
