@@ -1,8 +1,8 @@
 const pg = require('pg');
-const express = require('express');
 const path = require('path');
 const html = require('./views/pages.js');
 
+const express = require('express');
 const app = express();
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
@@ -13,9 +13,8 @@ app.get('/', (req, res, next) => {
 
 app.get('/members', async (req, res, next) => {
   try {
-    const response = await client.query(`SELECT * FROM members;`);
-    const members = response.rows;
-    res.send(html.members(members, req.url));
+    const { rows } = await client.query(`SELECT * FROM members;`);
+    res.send(html.members(rows, req.url));
   } catch (err) {
     next(err);
   }
@@ -38,10 +37,8 @@ app.get('/members/:id', async (req, res, next) => {
         [req.params.id]
       ),
     ];
-    const responses = await Promise.all(promises);
-    const instruments = responses[0].rows;
-    const info = responses[1].rows[0];
-    res.send(html.memberID(info, instruments, req.url));
+    const [instruments, info] = await Promise.all(promises);
+    res.send(html.memberID(info.rows[0], instruments.rows, req.url));
   } catch (err) {
     next(err);
   }
@@ -49,9 +46,8 @@ app.get('/members/:id', async (req, res, next) => {
 
 app.get('/discography/', async (req, res, next) => {
   try {
-    const response = await client.query(`SELECT * FROM discography`);
-    const discography = response.rows;
-    res.send(html.discography(discography, req.url));
+    const { rows } = await client.query(`SELECT * FROM discography`);
+    res.send(html.discography(rows, req.url));
   } catch (err) {
     next(err);
   }
@@ -59,31 +55,29 @@ app.get('/discography/', async (req, res, next) => {
 
 app.get('/discography/:id', async (req, res, next) => {
   try {
-    const response = await client.query(
+    const { rows } = await client.query(
       `SELECT * FROM discography
     WHERE id=$1;`,
       [req.params.id]
     );
-    const album = response.rows[0];
-    res.send(html.discographyID(album, req.url));
+    res.send(html.discographyID(rows[0], req.url));
   } catch (err) {
     next(err);
   }
 });
-
-const port = process.env.PORT || 3000;
-
-app.listen(port, () => console.log('listening on port'));
 
 const client = new pg.Client('postgres://localhost/backstreet_boys');
 
 const setUp = async () => {
   try {
     await client.connect();
-    console.log('connected');
+    console.log('client connected');
   } catch (err) {
     console.log(err);
   }
 };
 
 setUp();
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`listening on port ${port}`));
