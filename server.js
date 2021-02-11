@@ -14,7 +14,11 @@ const app = express();
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.get('/', (req, res, next) => {
-  res.send(pages.main(req.url));
+  try {
+    res.send(pages.main(req.url));
+  } catch (err) {
+    next(err);
+  }
 });
 
 app.get('/members', async (req, res, next) => {
@@ -48,6 +52,14 @@ app.get('/discography/:id', async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+});
+
+app.get('*', (req, res, next) => {
+  res.send(pages.errorPage());
+});
+
+app.use((err, req, res, next) => {
+  res.send(pages.errorPage());
 });
 
 const setUp = async () => {

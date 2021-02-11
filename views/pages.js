@@ -8,40 +8,30 @@ function styles() {
   `;
 }
 
-function header(url) {
+function header() {
   return html`
     <div id="header">
       <h1>
-        <a class="${url === '/' ? 'selected' : ''}" href="/">
-          Backstreet Boys Fan Club
-        </a>
+        <a href="/"> Backstreet Boys Fan Club </a>
       </h1>
       <div>
         <h2>
-          <a
-            class="${url.startsWith('/members') ? 'selected' : ''}"
-            href="/members"
-            >Members
-          </a>
+          <a href="/members">Members </a>
         </h2>
         <h2>
-          <a
-            class="${url.startsWith('/discography') ? 'selected' : ''}"
-            href="/discography"
-            >Discography
-          </a>
+          <a href="/discography">Discography </a>
         </h2>
       </div>
     </div>
   `;
 }
 
-function main(url) {
+function main() {
   return html`
     <html>
       $${styles()}
       <body>
-        $${header(url)}
+        $${header()}
         <img
           src="/assets/photos/backstreet_boys_main.jpg"
           alt="Backstreet Boys Main Page"
@@ -51,12 +41,12 @@ function main(url) {
   `;
 }
 
-function members(members, url) {
+function members(members) {
   return html`
     <html>
       $${styles()}
       <body>
-        $${header(url)}
+        $${header()}
         <div>
           <ul>
             $${members
@@ -76,12 +66,12 @@ function members(members, url) {
   `;
 }
 
-function memberID(info, instruments, url) {
+function memberID(info, instruments) {
   return html`
     <html>
       $${styles()}
       <body>
-        $${header(url)}
+        $${header()}
         <div>
           <h2>${info.name}</h2>
           <img src="/assets/photos/${info.image}" alt="Members Image" />
@@ -105,12 +95,12 @@ function memberID(info, instruments, url) {
   `;
 }
 
-function discography(discography, url) {
+function discography(discography) {
   return html`
     <html>
       $${styles()}
       <body>
-        $${header(url)}
+        $${header()}
         <div>
           <ul>
             $${discography
@@ -133,16 +123,32 @@ function discography(discography, url) {
   `;
 }
 
-function discographyID(album, url) {
+function discographyID(album) {
   return html`
     <html>
       $${styles()}
       <body>
-        $${header(url)}
+        $${header()}
         <div>
           <h2>${album.title}</h2>
           <img src="/assets/photos/${album.cover}" alt="Album Image" />
           <h3>Release Year : ${album.year}</h3>
+        </div>
+      </body>
+    </html>
+  `;
+}
+
+function errorPage() {
+  return html`
+    <html>
+      $${styles()}
+      <body>
+        $${header()}
+        <div>
+          <h2>Page Not Found</h2>
+          <h4>Quit Playing Games With My Heart!</h4>
+          <img id="pnf" src="/assets/photos/404.jpg" alt="404" />
         </div>
       </body>
     </html>
@@ -157,4 +163,5 @@ module.exports = {
   discographyID,
   header,
   styles,
+  errorPage,
 };
